@@ -1,0 +1,12 @@
+G:\coldfar_py\sharftrade9\Libs\FsPickler\bin\net9.0\FsPickler.deps.json
+G:\coldfar_py\sharftrade9\Libs\FsPickler\bin\net9.0\FsPickler.dll
+G:\coldfar_py\sharftrade9\Libs\FsPickler\bin\net9.0\FsPickler.pdb
+G:\coldfar_py\sharftrade9\Libs\FsPickler\obj\Release\net9.0\FsPickler9.0.fsproj.AssemblyReference.cache
+G:\coldfar_py\sharftrade9\Libs\FsPickler\obj\Release\net9.0\FsPickler9.0.AssemblyInfoInputs.cache
+G:\coldfar_py\sharftrade9\Libs\FsPickler\obj\Release\net9.0\FsPickler9.0.AssemblyInfo.fs
+G:\coldfar_py\sharftrade9\Libs\FsPickler\obj\Release\net9.0\FsPickler9.0.fsproj.CoreCompileInputs.cache
+G:\coldfar_py\sharftrade9\Libs\FsPickler\obj\Release\net9.0\FsPickler9.0.sourcelink.json
+G:\coldfar_py\sharftrade9\Libs\FsPickler\obj\Release\net9.0\FsPickler.dll
+G:\coldfar_py\sharftrade9\Libs\FsPickler\obj\Release\net9.0\refint\FsPickler.dll
+G:\coldfar_py\sharftrade9\Libs\FsPickler\obj\Release\net9.0\FsPickler.pdb
+G:\coldfar_py\sharftrade9\Libs\FsPickler\obj\Release\net9.0\ref\FsPickler.dll

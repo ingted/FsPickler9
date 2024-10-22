@@ -1,0 +1,151 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <!--<RuntimeIdentifier>win-x64</RuntimeIdentifier>-->
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <AssemblyName>FsPickler</AssemblyName>
+    <!--<AssemblyVersion>5.3.2.0</AssemblyVersion>-->
+    <!--<FileVersion>5.3.2.0</FileVersion>-->
+    <!--<Version>5.3.2.0</Version>-->
+    <RootNamespace>MBrace.FsPickler</RootNamespace>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+
+
+	  <EnablePackageValidation>false</EnablePackageValidation>
+	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	  <OutputPath>./bin</OutputPath>
+	  <IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</IsWindows>
+	  <IsOSX Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</IsOSX>
+	  <IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux>
+
+	  <PackageReadmeFile>README.md</PackageReadmeFile>
+	  <Authors />
+	  <Description />
+	  
+	  
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;PROTECT_STACK_OVERFLOWS;EMIT_IL</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>TRACE;PROTECT_STACK_OVERFLOWS;EMIT_IL;NETSTANDARD2_0</DefineConstants>
+    <OutputPath>./bin</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-NoEmit|AnyCPU'">
+    <DefineConstants>TRACE;PROTECT_STACK_OVERFLOWS</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="PostBuildEvent.Linux.ps1" />
+    <None Include="PostBuildEvent.ps1" />
+    <Compile Include="paket-files\eiriktsarpalis\TypeShape\src\TypeShape\TypeShape.fs">
+      <Paket>True</Paket>
+      <Link>TypeShape/TypeShape.fs</Link>
+    </Compile>
+    <Compile Include="Utils\CsharpProxy.fs" />
+    <Compile Include="Utils\Utils.fs" />
+    <Compile Include="Utils\Emit.fs" />
+    <Compile Include="Utils\Reflection.fs" />
+    <Compile Include="Utils\ShallowCopy.fs" />
+    <Compile Include="Utils\Hashing.fs" />
+    <Compile Include="Utils\TypeShapeExtensions.fs" />
+    <Compile Include="Pickler\Types.fs" />
+    <Compile Include="Pickler\PickleFormat.fs" />
+    <Compile Include="Pickler\ReflectionCache.fs" />
+    <Compile Include="Pickler\Pickler.fsi" />
+    <Compile Include="Pickler\Pickler.fs" />
+    <Compile Include="Pickler\PrimitivePicklers.fs" />
+    <Compile Include="Pickler\CompositePickler.fs" />
+    <Compile Include="Pickler\UnionCaseHelper.fs" />
+    <Compile Include="Pickler\ReflectionPicklers.fs" />
+    <Compile Include="Combinators\Wrappers.fs" />
+    <Compile Include="Combinators\Sequence.fs" />
+    <Compile Include="Combinators\Array.fs" />
+    <Compile Include="Combinators\Tuple.fs" />
+    <Compile Include="Combinators\FSharpList.fs" />
+    <Compile Include="Combinators\DotNetTypes.fs" />
+    <Compile Include="Combinators\FSharpTypes.fs" />
+    <Compile Include="Combinators\Collections.fs" />
+    <Compile Include="PicklerGeneration\PicklerRegistry.fs" />
+    <Compile Include="PicklerGeneration\PicklerEmit.fs" />
+    <Compile Include="PicklerGeneration\FieldPicklers.fs" />
+    <Compile Include="PicklerGeneration\ISerializablePickler.fs" />
+    <Compile Include="PicklerGeneration\DataContractPickler.fs" />
+    <Compile Include="PicklerGeneration\FSharpTypeGen.fs" />
+    <Compile Include="PicklerGeneration\CustomPickler.fs" />
+    <Compile Include="PicklerGeneration\PicklerGenerator.fs" />
+    <Compile Include="PicklerGeneration\PicklerResolution.fs" />
+    <Compile Include="PicklerGeneration\PicklerCache.fs" />
+    <Compile Include="Format\BinaryFormat.fs" />
+    <Compile Include="Format\XmlFormat.fs" />
+    <Compile Include="FsPickler\RootSerialization.fs" />
+    <Compile Include="FsPickler\ObjectSizeCounter.fs" />
+    <Compile Include="FsPickler\Serializer.fs" />
+    <Compile Include="FsPickler\TextSerializer.fs" />
+    <Compile Include="FsPickler\BinarySerializer.fs" />
+    <Compile Include="FsPickler\XmlSerializer.fs" />
+    <Compile Include="FsPickler\FsPickler.fs" />
+    <Compile Include="FsPickler\Combinators.fs" />
+    <Compile Include="FsPickler\ExtensionMethods.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Test.fsx" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="System.Reflection.Emit.Lightweight" Version="4.7.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="9.0.100-beta.24406.3" />
+  </ItemGroup>
+
+	<PropertyGroup>
+		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+		<Version>9.0.3</Version>
+		
+	</PropertyGroup>
+
+
+
+	<ItemGroup>
+		<None Include="README.md" Pack="true" PackagePath="" />
+	</ItemGroup>
+	<ItemGroup>
+
+		<None Include="LICENSE.txt" Pack="true" PackagePath="" />
+	</ItemGroup>
+
+
+
+	<PropertyGroup Condition="'$(IsWindows)'=='true'">
+		<PackageId>FAkka.$(AssemblyName)</PackageId>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(IsLinux)'=='true'">
+		<PackageId>FAkka.$(AssemblyName).Linux</PackageId>
+	</PropertyGroup>
+
+
+
+	<Target Name="PostPackNugetDeployWindows" AfterTargets="Pack" Condition="'$(IsWindows)'=='true' AND '$(Configuration)' == 'Release'">
+		<Exec Command="powershell -c &quot;write-host '====== Start Post-Build Event ======'&quot;&#xD;&#xA;powershell .\PostBuildEvent.ps1 FAkka.$(AssemblyName)" />
+	</Target>
+
+	<Target Name="PostPackNugetDeployLinux" AfterTargets="Pack" Condition="'$(IsLinux)'=='true' AND '$(Configuration)' == 'Release'">
+		<Exec Command="powershell -c &quot;write-host '====== Start Post-Build Event ======'&quot;&#xD;&#xA;powershell ./PostBuildEvent.Linux.ps1 FAkka.$(AssemblyName).Linux" />
+	</Target>
+
+	<PropertyGroup Condition="'$(IsWindows)'=='true'">
+		<DefineConstants>Windows</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(IsOSX)'=='true'">
+		<DefineConstants>OSX</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(IsLinux)'=='true'">
+		<DefineConstants>Linux</DefineConstants>
+	</PropertyGroup>
+  
+</Project>
