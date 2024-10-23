@@ -13,14 +13,16 @@ let isSerializable (result : Exn<Pickler>) =
     match result with
     | Success p -> not p.IsCloneableOnly
     | Error _ -> false
+#if DEBUG
 let i = ref 0
+#endif
 /// reflection - based pickler resolution
 let resolvePickler (registry : ICustomPicklerRegistry) 
                     (resolver : IPicklerResolver) 
                     (mkEarlyBinding : Pickler -> unit) 
                     (isPicklerReferenced : Pickler -> bool) (t : Type) =
 
-    //try
+    try
         // while stack overflows are unlikely here (this is type-level traversal)
         // it can be useful in catching a certain class of user errors when declaring custom picklers.
 #if PROTECT_STACK_OVERFLOWS
@@ -34,7 +36,9 @@ let resolvePickler (registry : ICustomPicklerRegistry)
 #endif
         // step 1: resolve shape of given type
         let shape = PicklerGenerator.ExtractShape t
+#if DEBUG
         let ii = Interlocked.Increment i
+#endif
         // step 2: create an uninitialized pickler instance and register to the local cache
         let p0 = PicklerGenerator.CreateUninitialized shape
         mkEarlyBinding p0
@@ -69,15 +73,15 @@ let resolvePickler (registry : ICustomPicklerRegistry)
         if isPicklerReferenced p0 then CompositePickler.Copy(p, p0) ; Success p0
         else Success p
 
-    //with 
-    //// Store all NonSerializableTypeException's in cache
-    //| :? NonSerializableTypeException as e when e.Type = t -> Exn.Error e
-    //| :? NonSerializableTypeException as e ->
-    //    Exn.error <| NonSerializableTypeException(t, e.Type, e)
+    with 
+    // Store all NonSerializableTypeException's in cache
+    | :? NonSerializableTypeException as e when e.Type = t -> Exn.Error e
+    | :? NonSerializableTypeException as e ->
+        Exn.error <| NonSerializableTypeException(t, e.Type, e)
 
-    //// wrap/reraise everything else as PicklerGenerationExceptions
-    //| :? PicklerGenerationException -> reraise ()
-    //| e -> raise <| new PicklerGenerationException(t, inner = e)
+    // wrap/reraise everything else as PicklerGenerationExceptions
+    | :? PicklerGenerationException -> reraise ()
+    | e -> raise <| new PicklerGenerationException(t, inner = e)
 
 let resolvePicklerT<'T> (registry : ICustomPicklerRegistry) 
                     (resolver : IPicklerResolver) 

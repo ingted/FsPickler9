@@ -39,6 +39,9 @@ type internal CompositePickler<'T> =
     val mutable private m_IsCloneableOnly : bool
 
     private new (reader, writer, cloner, accepter, nested : Pickler option, picklerInfo, ?cacheByRef, ?useWithSubtypes, ?skipHeaderWrite, ?bypass, ?skipVisit, ?isCloneableOnly) =
+#if DEBUG
+        printfn "%s" typeof<'T>.Name
+#endif
         {
             inherit Pickler<'T> ()
 
@@ -73,6 +76,9 @@ type internal CompositePickler<'T> =
     /// <param name="bypass">pickle using serialization/deserialization lambdas directly.</param>
     /// <param name="skipVisit">do not apply visitor to instances if specified.</param>
     new (reader, writer, cloner, accepter, picklerInfo, ?cacheByRef, ?useWithSubtypes, ?skipHeaderWrite, ?bypass, ?skipVisit, ?isCloneableOnly) =
+#if DEBUG
+        printfn "%s" typeof<'T>.Name
+#endif
         new CompositePickler<'T>(reader, writer, cloner, accepter, None, picklerInfo, ?cacheByRef = cacheByRef, ?useWithSubtypes = useWithSubtypes, 
                                                     ?skipHeaderWrite = skipHeaderWrite, ?bypass = bypass, ?skipVisit = skipVisit, ?isCloneableOnly = isCloneableOnly)
 
@@ -80,6 +86,9 @@ type internal CompositePickler<'T> =
     ///     Uninitialized pickler constructor
     /// </summary>
     new () = 
+#if DEBUG
+        printfn "%s" typeof<'T>.Name
+#endif
         {
             inherit Pickler<'T>()
 

@@ -37,6 +37,12 @@ type PicklerGenerator =
         let (|PicklerFactory|_|) (shape : TypeShape) = registry.TryGetPicklerFactory shape.Type
 
         match shape with
+        //| PicklerFactory factory ->
+        //    let pickler = factory resolver
+        //    if pickler.Type <> shape.Type then
+        //        raise <| PicklerGenerationException(shape.Type, "unexpected pickler type from custom pickler generator.")
+        //    pickler
+
         | Shape.Bool -> new BooleanPickler() :> _
         | Shape.Byte -> new BytePickler() :> _
         | Shape.SByte -> new SBytePickler() :> _
@@ -66,14 +72,6 @@ type PicklerGenerator =
         | :? TypeShape<System.DBNull> -> new DBNullPickler() :> _
         | PicklerFactory factory ->
             let pickler = factory resolver
-                //match factoryChoice with
-                //| Choice1Of2 factory ->
-                //    factory resolver
-                //| Choice2Of2 (f, t) ->
-                    
-
-
-
             if pickler.Type <> shape.Type then
                 raise <| PicklerGenerationException(shape.Type, "unexpected pickler type from custom pickler generator.")
             pickler

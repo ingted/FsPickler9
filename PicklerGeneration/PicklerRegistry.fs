@@ -144,22 +144,20 @@ type CustomPicklerRegistry () =
         //if ok then CustomPickler f 
         let (ok, f), ifGeneric = 
             if picklerFactories.ContainsKey t then
-                picklerFactories.TryGetValue t, 1
+                picklerFactories.TryGetValue t, t.IsConstructedGenericType
             elif t.IsGenericType then
                 let gtd = t.GetGenericTypeDefinition()
-                picklerFactories.TryGetValue gtd, 2
+                picklerFactories.TryGetValue gtd, true
             else
-                (false, Unchecked.defaultof<_>), 0
+                (false, Unchecked.defaultof<_>), false
 
                 
         if ok then 
-            if ifGeneric = 1 then
-                let (NonGeneric ngf) = f
-                CustomPickler ngf
-            else
-                let (Generic gf) = f
-                //CustomPicklerT gf
+            match f with
+            | Generic gf ->
                 let ngf = gf t (t.GetGenericArguments())
+                CustomPickler ngf
+            | NonGeneric ngf ->
                 CustomPickler ngf
         elif typesDeclaredSerializable.Contains t then DeclaredSerializable
         elif serializationPredicates |> Seq.exists (fun p -> p t) then DeclaredSerializable

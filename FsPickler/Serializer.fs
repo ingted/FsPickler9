@@ -56,7 +56,7 @@ type FsPicklerSerializer (formatProvider : IPickleFormatProvider, [<O;D(null)>]?
     member __.Serialize<'T>(stream : Stream, value : 'T, 
                                 [<O;D(null)>]?pickler : Pickler<'T>, [<O;D(null)>]?streamingContext : StreamingContext,
                                 [<O;D(null)>]?encoding : Encoding, [<O;D(null)>]?leaveOpen : bool) : unit =
-
+        let tt = typeof<'T>
         let pickler = match pickler with None -> resolver.Resolve<'T> () | Some p -> p
         use writer = initStreamWriter formatProvider stream encoding false leaveOpen
         let _ = writeRootObject resolver reflectionCache writer streamingContext None false __.DisableSubtypeResolution pickler value

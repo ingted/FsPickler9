@@ -10,7 +10,7 @@ open System.Reflection
 [<assembly: System.Reflection.AssemblyCompanyAttribute("FsPickler")>]
 [<assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")>]
 [<assembly: System.Reflection.AssemblyFileVersionAttribute("9.0.3.0")>]
-[<assembly: System.Reflection.AssemblyInformationalVersionAttribute("9.0.3+4cb377d3a00b3f56e1b390581c0438170e93691f")>]
+[<assembly: System.Reflection.AssemblyInformationalVersionAttribute("9.0.3+64abf6d3ded3a8ab0346d2f106cea5286b494f31")>]
 [<assembly: System.Reflection.AssemblyProductAttribute("FsPickler")>]
 [<assembly: System.Reflection.AssemblyTitleAttribute("FsPickler")>]
 [<assembly: System.Reflection.AssemblyVersionAttribute("9.0.3.0")>]
