@@ -7,7 +7,7 @@
     <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">$(UserProfile)\.nuget\packages\</NuGetPackageRoot>
     <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">C:\Users\Administrator\.nuget\packages\</NuGetPackageFolders>
     <NuGetProjectStyle Condition=" '$(NuGetProjectStyle)' == '' ">PackageReference</NuGetProjectStyle>
-    <NuGetToolVersion Condition=" '$(NuGetToolVersion)' == '' ">6.10.0</NuGetToolVersion>
+    <NuGetToolVersion Condition=" '$(NuGetToolVersion)' == '' ">6.11.1</NuGetToolVersion>
   </PropertyGroup>
   <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <SourceRoot Include="C:\Users\Administrator\.nuget\packages\" />
@@ -22,6 +22,6 @@
     <PkgMicrosoft_SourceLink_Common Condition=" '$(PkgMicrosoft_SourceLink_Common)' == '' ">C:\Users\Administrator\.nuget\packages\microsoft.sourcelink.common\8.0.0</PkgMicrosoft_SourceLink_Common>
     <PkgMicrosoft_Build_Tasks_Git Condition=" '$(PkgMicrosoft_Build_Tasks_Git)' == '' ">C:\Users\Administrator\.nuget\packages\microsoft.build.tasks.git\8.0.0</PkgMicrosoft_Build_Tasks_Git>
     <PkgMicrosoft_SourceLink_GitHub Condition=" '$(PkgMicrosoft_SourceLink_GitHub)' == '' ">C:\Users\Administrator\.nuget\packages\microsoft.sourcelink.github\8.0.0</PkgMicrosoft_SourceLink_GitHub>
-    <PkgFSharp_Core Condition=" '$(PkgFSharp_Core)' == '' ">C:\Users\Administrator\.nuget\packages\fsharp.core\9.0.100-beta.24406.3</PkgFSharp_Core>
+    <PkgFSharp_Core Condition=" '$(PkgFSharp_Core)' == '' ">C:\Users\Administrator\.nuget\packages\fsharp.core\9.0.100-beta.24466.6</PkgFSharp_Core>
   </PropertyGroup>
 </Project>

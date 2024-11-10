@@ -1,4 +1,4 @@
-﻿module internal MBrace.FsPickler.ReflectionCache
+﻿module MBrace.FsPickler.ReflectionCache
 
 open System
 open System.IO
@@ -174,8 +174,31 @@ let getMemberInfo (tyConv : ITypeNameConverter option)
         let isStatic = let m = e.GetAddMethod(true) in m.IsStatic
         Event(dt, getReflectedType e, e.Name, isStatic)
 
-    | _ -> Unknown (m.GetType(), m.ToString())
+    | _ -> 
+        let mt = m.GetType()
+        let ms = m.ToString()
+        printfn "Unknown (%s, %s, %A)" m.Name mt.FullName ms
+        Unknown (mt, ms)
 
+
+type TypeMap () =
+
+    // 靜態 ConcurrentDictionary 映射 Assembly 和名稱對應的替代名稱
+    static let typeMap = ConcurrentDictionary<string, ConcurrentDictionary<string, string>>()
+
+    /// 新增或更新 Assembly 和 Name 對應的替代名稱
+    static member AddOrUpdateAlternativeName(assembly: string, name: string, altName: string) =
+        let nameMap = typeMap.GetOrAdd(assembly, fun _ -> ConcurrentDictionary<string, string>())
+        nameMap.AddOrUpdate(name, altName, fun _ _ -> altName) |> ignore
+
+    /// 根據 Assembly 和 Name 取得替代名稱，如果不存在則回傳原始名稱
+    static member GetAlternativeName(assembly: string, name: string) =
+        match typeMap.TryGetValue(assembly) with
+        | true, nameMap ->
+            match nameMap.TryGetValue(name) with
+            | true, altName -> altName
+            | false, _ -> name
+        | false, _ -> name
 
 
 let loadMemberInfo (tyConv : ITypeNameConverter option) 
@@ -189,25 +212,65 @@ let loadMemberInfo (tyConv : ITypeNameConverter option)
 
     match mI with
     | NamedType(name, aI) ->
+#if DEBUG
+        printfn "NamedType: Name = %A, AssemblyInfo = %A" name aI
+#endif
         let tI = { Name = name ; AssemblyInfo = aI }
-        let tI' =
+        let tIP =
             match tyConv with
             | None -> tI
             | Some tc -> tc.ToDeserializedType tI
 
-        let assembly = getAssembly enableAssemblyLoading tI'.AssemblyInfo
-        assembly.GetType(tI'.Name, throwOnError = true) |> fastUnbox<MemberInfo>
+        let assembly = getAssembly enableAssemblyLoading tIP.AssemblyInfo
+        try
+            assembly.GetType(TypeMap.GetAlternativeName(assembly.FullName, tIP.Name), throwOnError = true) |> fastUnbox<MemberInfo>
+        with
+        | exn ->
+            printfn "type:%s, %s, %s" tIP.Name assembly.FullName exn.Message
+            reraise ()
 
-    | Array et -> et.MakeArrayType() |> fastUnbox<MemberInfo>
-    | ArrayMultiDimensional (et, rk) -> et.MakeArrayType(rk) |> fastUnbox<MemberInfo>
-    | Pointer et -> et.MakePointerType() |> fastUnbox<MemberInfo>
-    | ByRef et -> et.MakeByRefType() |> fastUnbox<MemberInfo>
+    | Array et ->
+#if DEBUG    
+        printfn "Array: ElementType = %A" et
+#endif
+        et.MakeArrayType() |> fastUnbox<MemberInfo>
 
-    | GenericTypeInstance(dt, tyArgs) -> dt.MakeGenericType tyArgs |> fastUnbox<MemberInfo>
-    | GenericTypeParam(dt, idx) -> dt.GetGenericArguments().[idx] |> fastUnbox<MemberInfo>
-    | GenericMethodParam(dm, idx) -> dm.GetGenericArguments().[idx] |> fastUnbox<MemberInfo>
+    | ArrayMultiDimensional (et, rk) -> 
+#if DEBUG
+        printfn "ArrayMultiDimensional: ElementType = %A, Rank = %A" et rk
+#endif
+        et.MakeArrayType(rk) |> fastUnbox<MemberInfo>
+    | Pointer et -> 
+#if DEBUG
+        printfn "Pointer: ElementType = %A" et
+#endif
+        et.MakePointerType() |> fastUnbox<MemberInfo>
+    | ByRef et -> 
+#if DEBUG
+        printfn "ByRef: ElementType = %A" et
+#endif
+        et.MakeByRefType() |> fastUnbox<MemberInfo>
+
+    | GenericTypeInstance(dt, tyArgs) -> 
+#if DEBUG
+        printfn "GenericTypeInstance: DeclaringType = %A, TypeArguments = %A" dt tyArgs
+#endif
+        dt.MakeGenericType tyArgs |> fastUnbox<MemberInfo>
+    | GenericTypeParam(dt, idx) -> 
+#if DEBUG
+        printfn "GenericTypeParam: DeclaringType = %A, Index = %A" dt idx
+#endif
+        dt.GetGenericArguments().[idx] |> fastUnbox<MemberInfo>
+    | GenericMethodParam(dm, idx) -> 
+#if DEBUG
+        printfn "GenericMethodParam: DeclaringMethod = %A, Index = %A" dm idx
+#endif
+        dm.GetGenericArguments().[idx] |> fastUnbox<MemberInfo>
 
     | Method(dt, reflectedType, signature, isStatic) ->
+#if DEBUG
+        printfn "Method: DeclaringType = %A, ReflectedType = %A, Signature = %A, IsStatic = %A" dt reflectedType signature isStatic
+#endif
         let isMatchingMethod (m : MethodInfo) = 
             m.DeclaringType = dt && getMethodSignature m = signature
 
@@ -218,14 +281,37 @@ let loadMemberInfo (tyConv : ITypeNameConverter option)
             let msg = sprintf "Cloud not locate method '%s' in type '%O'." signature dt
             raise <| new MissingMethodException(msg)
 
-    | GenericMethodInstance(gm, mParams) -> gm.MakeGenericMethod mParams |> fastUnbox<MemberInfo>
+    | GenericMethodInstance(gm, mParams) ->
+#if DEBUG    
+        printfn "GenericMethodInstance: GenericMethod = %A, MethodParameters = %A" gm mParams
+#endif
+        gm.MakeGenericMethod mParams |> fastUnbox<MemberInfo>
 
-    | Constructor (dt, isStatic, cParams) -> dt.GetConstructor(getFlags isStatic, null, cParams, [||]) |> fastUnbox<MemberInfo>
-    | Property (dt, None, name, isStatic) -> dt.GetProperty(name, getFlags isStatic) |> fastUnbox<MemberInfo>
-    | Field(dt, None, name, isStatic) -> dt.GetField(name, getFlags isStatic) |> fastUnbox<MemberInfo>
-    | Event(dt, None, name, isStatic) -> dt.GetEvent(name, getFlags isStatic) |> fastUnbox<MemberInfo>
+    | Constructor (dt, isStatic, cParams) -> 
+#if DEBUG
+        printfn "Constructor: DeclaringType = %A, IsStatic = %A, ConstructorParameters = %A" dt isStatic cParams
+#endif
+        dt.GetConstructor(getFlags isStatic, null, cParams, [||]) |> fastUnbox<MemberInfo>
+    | Property (dt, None, name, isStatic) -> 
+#if DEBUG
+        printfn "Property: DeclaringType = %A, Name = %A, IsStatic = %A" dt name isStatic
+#endif
+        dt.GetProperty(name, getFlags isStatic) |> fastUnbox<MemberInfo>
+    | Field(dt, None, name, isStatic) -> 
+#if DEBUG
+        printfn "Field: DeclaringType = %A, Name = %A, IsStatic = %A" dt name isStatic
+#endif
+        dt.GetField(name, getFlags isStatic) |> fastUnbox<MemberInfo>
+    | Event(dt, None, name, isStatic) -> 
+#if DEBUG
+        printfn "Event: DeclaringType = %A, Name = %A, IsStatic = %A" dt name isStatic
+#endif
+        dt.GetEvent(name, getFlags isStatic) |> fastUnbox<MemberInfo>
 
     | Property (dt, Some rt, name, isStatic) ->
+#if DEBUG
+        printfn "Property with ReflectedType: DeclaringType = %A, ReflectedType = %A, Name = %A, IsStatic = %A" dt rt name isStatic
+#endif
         try 
             rt.GetProperties(getFlags isStatic) |> Array.find(fun p -> p.Name = name && p.DeclaringType = dt) |> fastUnbox<MemberInfo>
         with :? KeyNotFoundException ->
@@ -233,6 +319,9 @@ let loadMemberInfo (tyConv : ITypeNameConverter option)
             raise <| new MissingMemberException(msg)
 
     | Field (dt, Some rt, name, isStatic) ->
+#if DEBUG
+        printfn "Field with ReflectedType: DeclaringType = %A, ReflectedType = %A, Name = %A, IsStatic = %A" dt rt name isStatic
+#endif
         try 
             rt.GetFields(getFlags isStatic) |> Array.find(fun f -> f.Name = name && f.DeclaringType = dt) |> fastUnbox<MemberInfo>
         with :? KeyNotFoundException ->
@@ -240,6 +329,9 @@ let loadMemberInfo (tyConv : ITypeNameConverter option)
             raise <| new MissingFieldException(msg)
 
     | Event (dt, Some rt, name, isStatic) ->
+#if DEBUG
+        printfn "Event with ReflectedType: DeclaringType = %A, ReflectedType = %A, Name = %A, IsStatic = %A" dt rt name isStatic
+#endif
         try 
             rt.GetEvents(getFlags isStatic) |> Array.find(fun e -> e.Name = name && e.DeclaringType = dt) |> fastUnbox<MemberInfo>
         with :? KeyNotFoundException ->

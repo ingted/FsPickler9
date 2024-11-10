@@ -8,7 +8,7 @@
     <licenseUrl>https://aka.ms/deprecateLicenseUrl</licenseUrl>
     <readme>README.md</readme>
     <description>Package Description</description>
-    <repository type="git" commit="4cb377d3a00b3f56e1b390581c0438170e93691f" />
+    <repository type="git" commit="64abf6d3ded3a8ab0346d2f106cea5286b494f31" />
     <dependencies>
       <group targetFramework="net9.0">
         <dependency id="FSharp.Core" version="9.0.100-beta.24406.3" exclude="Build,Analyzers" />

@@ -22,10 +22,14 @@
 	  <PackageReadmeFile>README.md</PackageReadmeFile>
 	  <Authors />
 	  <Description />
+	  <Configurations>Debug;Release;DebugWithNoDep</Configurations>
 	  
 	  
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;PROTECT_STACK_OVERFLOWS;EMIT_IL</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugWithNoDep|AnyCPU'">
     <DefineConstants>TRACE;DEBUG;PROTECT_STACK_OVERFLOWS;EMIT_IL</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -99,12 +103,12 @@
     <PackageReference Include="System.Reflection.Emit.Lightweight" Version="4.7.0" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Update="FSharp.Core" Version="9.0.100-beta.24406.3" />
+    <PackageReference Update="FSharp.Core" Version="9.0.100-beta.24466.6" />
   </ItemGroup>
 
 	<PropertyGroup>
 		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-		<Version>9.0.3</Version>
+		<Version>9.0.6</Version>
 		
 	</PropertyGroup>
 

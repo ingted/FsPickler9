@@ -1,0 +1,17 @@
+G:\coldfar_py\sharftrade9\Libs\FsPickler\bin\net9.0\publish\FsPickler.dll
+G:\coldfar_py\sharftrade9\Libs\FsPickler\bin\net9.0\publish\FsPickler.pdb
+G:\coldfar_py\sharftrade9\Libs\FsPickler\bin\net9.0\publish\FSharp.Core.dll
+G:\coldfar_py\sharftrade9\Libs\FsPickler\bin\net9.0\publish\cs\FSharp.Core.resources.dll
+G:\coldfar_py\sharftrade9\Libs\FsPickler\bin\net9.0\publish\de\FSharp.Core.resources.dll
+G:\coldfar_py\sharftrade9\Libs\FsPickler\bin\net9.0\publish\es\FSharp.Core.resources.dll
+G:\coldfar_py\sharftrade9\Libs\FsPickler\bin\net9.0\publish\fr\FSharp.Core.resources.dll
+G:\coldfar_py\sharftrade9\Libs\FsPickler\bin\net9.0\publish\it\FSharp.Core.resources.dll
+G:\coldfar_py\sharftrade9\Libs\FsPickler\bin\net9.0\publish\ja\FSharp.Core.resources.dll
+G:\coldfar_py\sharftrade9\Libs\FsPickler\bin\net9.0\publish\ko\FSharp.Core.resources.dll
+G:\coldfar_py\sharftrade9\Libs\FsPickler\bin\net9.0\publish\pl\FSharp.Core.resources.dll
+G:\coldfar_py\sharftrade9\Libs\FsPickler\bin\net9.0\publish\pt-BR\FSharp.Core.resources.dll
+G:\coldfar_py\sharftrade9\Libs\FsPickler\bin\net9.0\publish\ru\FSharp.Core.resources.dll
+G:\coldfar_py\sharftrade9\Libs\FsPickler\bin\net9.0\publish\tr\FSharp.Core.resources.dll
+G:\coldfar_py\sharftrade9\Libs\FsPickler\bin\net9.0\publish\zh-Hans\FSharp.Core.resources.dll
+G:\coldfar_py\sharftrade9\Libs\FsPickler\bin\net9.0\publish\zh-Hant\FSharp.Core.resources.dll
+G:\coldfar_py\sharftrade9\Libs\FsPickler\bin\net9.0\publish\FsPickler.deps.json

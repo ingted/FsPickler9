@@ -6,9 +6,9 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v9.0": {
-      "FsPickler/9.0.3": {
+      "FsPickler/9.0.6": {
         "dependencies": {
-          "FSharp.Core": "9.0.100-beta.24406.3",
+          "FSharp.Core": "9.0.100-beta.24466.6",
           "Microsoft.SourceLink.GitHub": "8.0.0",
           "System.Reflection.Emit.Lightweight": "4.7.0"
         },
@@ -16,11 +16,11 @@
           "FsPickler.dll": {}
         }
       },
-      "FSharp.Core/9.0.100-beta.24406.3": {
+      "FSharp.Core/9.0.100-beta.24466.6": {
         "runtime": {
           "lib/netstandard2.1/FSharp.Core.dll": {
             "assemblyVersion": "9.0.0.0",
-            "fileVersion": "9.1.24.40603"
+            "fileVersion": "9.1.24.46606"
           }
         },
         "resources": {
@@ -77,17 +77,17 @@
     }
   },
   "libraries": {
-    "FsPickler/9.0.3": {
+    "FsPickler/9.0.6": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "FSharp.Core/9.0.100-beta.24406.3": {
+    "FSharp.Core/9.0.100-beta.24466.6": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-w3q+hTyiwyVHPvq3mAvlCWj1LUsP3kWmmpnX/VOOAaC8SKeeGLBFbBks7NWnnZ35Qn2YgNyDEHP5f7LEkdMFWA==",
-      "path": "fsharp.core/9.0.100-beta.24406.3",
-      "hashPath": "fsharp.core.9.0.100-beta.24406.3.nupkg.sha512"
+      "sha512": "sha512-VdkJ1cUa55TK4T+ewwtZA3un369qbI8VtbWL6SoeenX/phA0xsMHNlTHtmACUOAD5Ul2AqippqM4DP859holFg==",
+      "path": "fsharp.core/9.0.100-beta.24466.6",
+      "hashPath": "fsharp.core.9.0.100-beta.24466.6.nupkg.sha512"
     },
     "Microsoft.Build.Tasks.Git/8.0.0": {
       "type": "package",

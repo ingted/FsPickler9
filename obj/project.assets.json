@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     "net9.0": {
-      "FSharp.Core/9.0.100-beta.24406.3": {
+      "FSharp.Core/9.0.100-beta.24466.6": {
         "type": "package",
         "compile": {
           "lib/netstandard2.1/FSharp.Core.dll": {
@@ -105,15 +105,15 @@
     }
   },
   "libraries": {
-    "FSharp.Core/9.0.100-beta.24406.3": {
-      "sha512": "w3q+hTyiwyVHPvq3mAvlCWj1LUsP3kWmmpnX/VOOAaC8SKeeGLBFbBks7NWnnZ35Qn2YgNyDEHP5f7LEkdMFWA==",
+    "FSharp.Core/9.0.100-beta.24466.6": {
+      "sha512": "VdkJ1cUa55TK4T+ewwtZA3un369qbI8VtbWL6SoeenX/phA0xsMHNlTHtmACUOAD5Ul2AqippqM4DP859holFg==",
       "type": "package",
-      "path": "fsharp.core/9.0.100-beta.24406.3",
+      "path": "fsharp.core/9.0.100-beta.24466.6",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
-        "fsharp.core.9.0.100-beta.24406.3.nupkg.sha512",
+        "fsharp.core.9.0.100-beta.24466.6.nupkg.sha512",
         "fsharp.core.nuspec",
         "lib/netstandard2.0/FSharp.Core.dll",
         "lib/netstandard2.0/FSharp.Core.xml",
@@ -345,7 +345,7 @@
   },
   "projectFileDependencyGroups": {
     "net9.0": [
-      "FSharp.Core >= 9.0.100-beta.24406.3",
+      "FSharp.Core >= 9.0.100-beta.24466.6",
       "Microsoft.SourceLink.GitHub >= 8.0.0",
       "System.Reflection.Emit.Lightweight >= 4.7.0"
     ]
@@ -354,7 +354,7 @@
     "C:\\Users\\Administrator\\.nuget\\packages\\": {}
   },
   "project": {
-    "version": "9.0.3",
+    "version": "9.0.6",
     "restore": {
       "projectUniqueName": "G:\\coldfar_py\\sharftrade9\\Libs\\FsPickler\\FsPickler9.0.fsproj",
       "projectName": "FAkka.FsPickler",
@@ -372,7 +372,7 @@
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "C:\\Program Files\\dotnet\\library-packs": {},
-        "C:\\Program Files\\dotnet\\sdk\\9.0.100-preview.7.24407.12\\FSharp\\library-packs": {},
+        "C:\\Program Files\\dotnet\\sdk\\9.0.100-rc.2.24474.11\\FSharp\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -384,7 +384,7 @@
       "restoreAuditProperties": {
         "enableAudit": "true",
         "auditLevel": "low",
-        "auditMode": "direct"
+        "auditMode": "all"
       }
     },
     "frameworks": {
@@ -394,7 +394,7 @@
           "FSharp.Core": {
             "include": "Runtime, Compile, Build, Native, Analyzers, BuildTransitive",
             "target": "Package",
-            "version": "[9.0.100-beta.24406.3, )",
+            "version": "[9.0.100-beta.24466.6, )",
             "generatePathProperty": true
           },
           "Microsoft.SourceLink.GitHub": {
@@ -421,18 +421,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.Net.Sdk.Compilers.Toolset",
-            "version": "[9.0.100-preview.7.24407.12, 9.0.100-preview.7.24407.12]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100-preview.7.24407.12/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100-rc.2.24474.11/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
